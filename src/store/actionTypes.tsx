@@ -1,0 +1,9 @@
+export const LOGIN_USER = 'LOGIN_USER';
+export const IS_LOGGING_IN_USER_ERROR = 'IS_LOGGING_IN_USER_ERROR';
+
+export const SIGNUP_USER = 'SIGNUP_USER';
+export const IS_SIGNING_UP_USER_ERROR = 'IS_SIGNING_UP_USER_ERROR';
+
+export const IS_LOADING ='IS_LOADING';
+export const LOGOUT_USER = 'LOGOUT_USER';
+
