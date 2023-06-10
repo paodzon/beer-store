@@ -4,12 +4,12 @@ import Image from "next/image";
 import Button from "@/components/common/Button";
 
 interface BeerCardProps {
-  id: number,
-  image: string,
-  name: string,
-  abv: number,
-  ibu: number,
-  ebc: number,
+  id?: number,
+  image?: string,
+  name?: string,
+  abv?: number,
+  ibu?: number,
+  ebc?: number,
 }
 
 const BeerCard = (props: BeerCardProps) => {
@@ -19,8 +19,8 @@ const BeerCard = (props: BeerCardProps) => {
 
       <div className="relative w-full h-44 my-3 object-contain mt-4">
         <Image
-          src={props.image}
-          alt={props.name}
+          src={props.image ?? ''}
+          alt={props.name ?? ''}
           fill
           priority
           className="object-contain"
