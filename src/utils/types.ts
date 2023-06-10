@@ -17,7 +17,7 @@ interface Action {
 interface CartItem {
   id: number,
   name: string,
-  quantity: number,
+  quantity?: number,
   product_id: number,
   user_id: string,
   image_url: string | null
@@ -77,4 +77,13 @@ interface SyntheticEvent {
   target: EventTarget;
   timeStamp: Date;
   type: string;
+}
+
+interface CurrentUser {
+  id: string,
+  aud: string,
+  email: string,
+  phone: string,
+  role: string,
+  session_id: string
 }

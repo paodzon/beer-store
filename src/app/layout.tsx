@@ -5,8 +5,9 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import ReduxProvider from "@/provider/reduxProvider";
 import AuthProvider from "@/provider/authProvider";
-import { getSession } from "@/utils/helpers";
+import { checkAuthentication, getSession } from "@/utils/helpers";
 import { Toaster } from "react-hot-toast";
+import Footer from "@/components/layout/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +27,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
             <AuthProvider session={session}>
               {session?.user && <Header />}
               {children}
+              {session?.user && <Footer />}
             </AuthProvider>
           </ReduxProvider>
 

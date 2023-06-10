@@ -6,16 +6,17 @@ import Search from "@/components/products/Search";
 import SelectYear from "@/components/products/SelectYear";
 import queryString from 'query-string';
 import Image from "next/image";
+import Pagination from "@/components/products/Pagination";
 
-const Home = async({searchParams}:any) =>{
+const Home = async({searchParams}:{searchParams: object}) =>{
   const filterQuery = queryString.stringify(searchParams);
   const products = await getProducts(filterQuery);
   const isDataEmpty = !Array.isArray(products) || products.length < 1 || !products;
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center ">
       <Hero />
-      <div id="products" className="flex flex-col justify-center min-h-screen w-full px-24 md:mt-72">
+      <div id="products" className="flex flex-col justify-center min-h-screen w-full md:mt-72 px-32">
         <div className="flex items-start w-full flex-col gap-2">
           <h1 className="text-2xl font-bold">Beer Products</h1>
           <p className="text-base">Explore out beers you might like</p>
@@ -25,7 +26,8 @@ const Home = async({searchParams}:any) =>{
           </div>
         </div>
         {!isDataEmpty ? (
-          <div className="grid grid-cols-3 lg:grid-cols-2 md:flex md:flex-col justify-center gap-10 pt-14 ">
+          <div className="flex flex-col justify-center items-center gap-10">
+            <div className="grid 3xl:grid-cols-4 2xl:!grid-cols-3 lg:flex lg:flex-row lg: flex-wrap md:flex md:flex-col justify-center gap-10 pt-14 ">
             {products.map((product: Beer) => {
               return (
                 <BeerCard
@@ -39,7 +41,11 @@ const Home = async({searchParams}:any) =>{
                 />
               );
             })}
+            
           </div>
+          <Pagination/>
+          </div>
+          
         ) : (
           <div className="w-full flex flex-col justify-center items-center mt-48 gap-5">
             <Image width={70} height={70} src='/non-alcoholic-beer.png' alt='alcohol'/>

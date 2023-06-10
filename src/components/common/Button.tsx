@@ -15,7 +15,7 @@ const Button: React.FC<ButtonProps> = (props) => {
   return (
     <MaterialButton
       className={clsx(
-        `mt-14 flex w-full justify-center normal-case rounded-md px-3 py-1.5 text-sm leading-6 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary`,
+        `flex w-full h-fit justify-center normal-case rounded-md px-5 py-1.5 text-sm leading-6 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary`,
         props.color ? `bg-${props.color}` : 'bg-primary',
         props.textColor ? `text-${props.textColor}` : 'text-white'
       )}
@@ -27,7 +27,7 @@ const Button: React.FC<ButtonProps> = (props) => {
         props.children
       ) : (
         <div className="flex items-center gap-2">
-          <Spinner color="blue" className="h-4 w-4" /> Loading...
+          <Spinner color="blue" className="h-4 w-4" /> {props.children}...
         </div>
       )}
     </MaterialButton>

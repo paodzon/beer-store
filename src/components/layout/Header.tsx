@@ -5,21 +5,25 @@ import Link from "next/link";
 import {
   Navbar,
   Typography,
-  Button,
   IconButton,
   Collapse,
+  MenuList,
+  MenuHandler,
+  Menu,
+  MenuItem,
 } from "@material-tailwind/react";
-import {useDispatch} from 'react-redux';
+import Button from "../common/Button";
+import { useDispatch } from "react-redux";
 import { signOutUser } from "@/actions/authActions";
 import { useRouter } from "next/navigation";
-import { usePathname } from 'next/navigation'
 
 const Header: React.FC = () => {
   const [openNav, setOpenNav] = useState<boolean>(false);
-  const user = useSelector<any>((state) => state.auth.user);
+  const user:CurrentUser| any= useSelector<any>((state) => state.auth.user);
   const dispatch = useDispatch();
-  const pathname = usePathname();
   const router = useRouter();
+
+
   useEffect(() => {
     window.addEventListener(
       "resize",
@@ -28,24 +32,17 @@ const Header: React.FC = () => {
   }, []);
 
   const navList: React.ReactNode = (
-    <ul className="mb-4 mt-5 flex flex-row gap-5 lg:mb-0 lg:mt-0 lg:items-center lg:gap-5 md:flex-col">
+    <ul className="mb-4 mt-5 flex flex-row items-center gap-6 lg:mb-0 lg:mt-0 lg:items-center lg:gap-5 md:flex-col">
       <Typography
         as="li"
         variant="small"
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <Link href="/" className="flex items-center">
-          Home
-        </Link>
-      </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <Link href="/products" className="flex items-center">
+        <Link
+          href="/"
+          className="flex items-center font-semibold hover:text-secondary"
+        >
           Products
         </Link>
       </Typography>
@@ -55,28 +52,49 @@ const Header: React.FC = () => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <Link href="/cart" className="flex items-center">
-          Cart
+        <Link
+          href="/cart"
+          className="flex items-center justify-center gap-2 hover:text-secondary"
+        >
+          <p className="font-semibold">View Cart</p>
         </Link>
       </Typography>
-      <Button
-              onClick={async() => {
+
+      <div className="hidden lg:block">
+        <Button
+        
+          onClick={async () => {
+            await dispatch(signOutUser());
+            router.refresh();
+          }}
+        >
+          <span>Sign out</span>
+        </Button>
+      </div>
+      <div className="block lg:hidden">
+        <Menu>
+          <MenuHandler>
+            <div className="border border-primary rounded-[50%] h-[40px] w-[40px] flex justify-center items-center cursor-pointer">
+              <p className="text-black font-bold">{'P' ?? ''}</p>
+            </div>
+          </MenuHandler>
+          <MenuList>
+            <MenuItem
+              className="flex items-center gap-2 "
+              onClick={async () => {
                 await dispatch(signOutUser());
                 router.refresh();
               }}
-
-              size="sm"
-              className="bg-primary md:hidden"
             >
-              <span>Sign out</span>
-            </Button>
+              <Typography variant="small" className="font-normal">
+                Sign Out
+              </Typography>
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      </div>
     </ul>
   );
-
-  
-  if(pathname ==='/login'){
-    return <></>
-  }
 
   return (
     <Navbar className="sticky inset-0 z-10 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4">
@@ -84,15 +102,15 @@ const Header: React.FC = () => {
         <Typography
           as="a"
           href="#"
-          className="mr-4 cursor-pointer py-1.5 font-medium"
+          className="mr-4 cursor-pointer ml-5 py-1 text-xl font-bold"
         >
-          Logo
+          Brew Haven
         </Typography>
         <div className="flex items-center gap-4">
           <div className="mr-4 block lg:hidden">{navList}</div>
           <IconButton
             variant="text"
-            className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent hidden md:block"
+            className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent hidden lg:block"
             ripple={false}
             onClick={() => setOpenNav(!openNav)}
           >
@@ -129,12 +147,7 @@ const Header: React.FC = () => {
           </IconButton>
         </div>
       </div>
-      <Collapse open={openNav}>
-        {navList}
-        <Button size="sm" fullWidth className="mb-2 bg-primary" onClick={async() =>{await dispatch(signOutUser());} }>
-          <span>Sign Out</span>
-        </Button>
-      </Collapse>
+      <Collapse open={openNav}>{navList}</Collapse>
     </Navbar>
   );
 };

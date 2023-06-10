@@ -20,6 +20,7 @@ module.exports = withMT({
       lg: {'max': "1200px"},
       xl: {'max': "1450px"},
       "2xl": {'max': "1536px"},
+      "3xl": {'max': "2100px"}
     },
     extend: {
       backgroundImage: {
