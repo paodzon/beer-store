@@ -4,7 +4,7 @@ import Search from "@/components/products/Search";
 import SelectYear from "@/components/products/SelectYear";
 import React from "react";
 
-const Loading = () => {
+export default function Loading(): React.JSX.Element {
   return (
     <div className="flex flex-col justify-center items-center">
       <Hero />
@@ -29,6 +29,4 @@ const Loading = () => {
       </div>
     </div>
   );
-};
-
-export default Loading;
+}

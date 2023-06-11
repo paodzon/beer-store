@@ -4,10 +4,8 @@ import { useCallback, useState } from 'react'
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { usePersistentScroll } from '@/utils/hooks';
 
-
-const SelectYear = () => {
-
-  const [selected, setSelected] = useState('')
+const SelectYear:React.FC = () => {
+  const [selected, setSelected] = useState<string>('')
   const router = useRouter();
   const pathName = usePathname();
   const searchParams = useSearchParams();
@@ -33,22 +31,20 @@ const SelectYear = () => {
 
 
 
-  const handleChange = async(e:any) => {
+  const handleChange = async(e:React.ChangeEvent<HTMLSelectElement>) => {
     setSelected(e.target.value)
     await setSelectedParam(e.target.value);
-
-
   }
 
   return (
     <div className="w-full max-w-[20rem]">
       <select
-      placeholder='Select year brewed'
+        placeholder='Select year brewed'
         value={selected}
         onChange={handleChange}
-        className="w-full cursor-default rounded-md bg-white py-1.5 pl-3 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+        className="w-full cursor-default rounded-md bg-white py-1.5 pl-3 text-left text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:border-primary sm:text-sm sm:leading-6"
       >
-        <option value=''>Select Year</option>
+        <option value=''>Select Brewed Year</option>
         <option value="2016">2016</option>
         <option value="2015">2015</option>
         <option value="2014">2014</option>

@@ -1,17 +1,16 @@
+import React from "react";
 import { getShoppingCart } from "@/actions/getProducts";
 import CartHeader from "@/components/cart/CartHeader";
 import ItemCard from "@/components/cart/ItemCard";
-import withAuth from "@/components/hoc/withAuth";
 
-import React from "react";
 
 export const revalidate = 0;
 
-const Cart = async () => {
+const Cart: React.FC = async () => {
   const data: Array<CartItem> | [] | any = await getShoppingCart();
   const cartLength = data
-  .map((item: CartItem) => item.quantity)
-  .reduce((acc: number, curr: number) => acc + curr,0);
+    .map((item: CartItem) => item.quantity)
+    .reduce((acc: number, curr: number) => acc + curr, 0);
 
   if (!data) {
     return (
@@ -21,14 +20,13 @@ const Cart = async () => {
     );
   }
 
-
   return (
     <div className=" bg-gray-100 pt-20 min-h-screen">
       <div className="w-full flex flex-row justify-center">
         <CartHeader length={cartLength} />
       </div>
       <div className="flex flex-row w-full justify-center gap-20 lg:flex-col">
-        <div className="rounded-lg w-[60%] lg:w-full lg:px-20 lg:flex lg:flex-row lg:flex-wrap lg:gap-10 lg:justify-center">
+        <div className="rounded-lg w-[60%] lg:w-full lg:px-20 lg:flex lg:flex-row lg:flex-wrap lg:gap-10 lg:justify-center sm:!px-10">
           {data.map((item: CartItem) => {
             return (
               <ItemCard
@@ -48,4 +46,4 @@ const Cart = async () => {
   );
 };
 
-export default withAuth(Cart);
+export default Cart;

@@ -8,7 +8,6 @@ export const getProducts = async (query:string) => {
   return response.json();
 }
 
-
 export const getShoppingCart = async () => {
   const response = await supabase.from("cart").select().order('id', {ascending:true});
   return response.data;

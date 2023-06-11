@@ -1,13 +1,11 @@
-import SuccessCard from '@/components/auth/SuccessCard'
-import AuthLayout from '@/components/layout/AuthLayout'
-import React from 'react'
+import React from "react";
+import SuccessCard from "@/components/auth/SuccessCard";
+import AuthLayout from "@/components/layout/AuthLayout";
 
-const RegisterSuccess = () => {
+export default function RegisterSuccess(): JSX.Element {
   return (
     <AuthLayout>
-      <SuccessCard/>
+      <SuccessCard />
     </AuthLayout>
-  )
+  );
 }
-
-export default RegisterSuccess

@@ -1,38 +1,38 @@
 "use client";
-import { useCallback, useState } from 'react'
-import { Input, Button} from "@material-tailwind/react";
+import { useCallback, useState } from "react";
+import { Input, Button } from "@material-tailwind/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { usePersistentScroll } from '@/utils/hooks';
+import { usePersistentScroll } from "@/utils/hooks";
 
-const Search = () => {
+const Search: React.FC = () => {
   const router = useRouter();
   const pathName = usePathname();
   const searchParams = useSearchParams();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState<string>("");
   usePersistentScroll(searchParams);
 
   const setSearchParam = useCallback(
     (key: string, value: string) => {
-      const currentParams = searchParams.toString()
-      const params = new URLSearchParams(currentParams)
+      const currentParams = searchParams.toString();
+      const params = new URLSearchParams(currentParams);
 
-      params.set(key, value)
-      params.set('page', '1');
-      if(value === "") params.delete(key);
-      if (currentParams === params.toString()) return
-      localStorage.setItem('persistentScroll', window.scrollY.toString())
-      router.push(`${pathName}?${params.toString()}`)
+      params.set(key, value);
+      params.set("page", "1");
+      if (value === "") params.delete(key);
+      if (currentParams === params.toString()) return;
+      localStorage.setItem("persistentScroll", window.scrollY.toString());
+      router.push(`${pathName}?${params.toString()}`);
     },
-    [searchParams, pathName, router],
-  )
+    [searchParams, pathName, router]
+  );
 
-  const onChange = (e: React.ChangeEvent<HTMLFormElement>) => {
+  const onSubmitSearch = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSearchParam('beer_name', search);
+    setSearchParam("beer_name", search);
   };
 
   return (
-    <form className="w-full max-w-[20rem]" onSubmit={onChange}>
+    <form className="w-full max-w-[20rem]" onSubmit={onSubmitSearch}>
       <div className="relative flex w-full max-w-[24rem]">
         <Input
           type="text"
@@ -51,7 +51,6 @@ const Search = () => {
         <Button
           type="submit"
           size="sm"
-         
           className={`!absolute right-1 top-1 rounded bg-primary`}
         >
           Search

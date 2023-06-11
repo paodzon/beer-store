@@ -1,31 +1,35 @@
 "use client";
+
 import { useState } from "react";
 import Link from "next/link";
-import Button from "../common/Button";
 import { useSelector, useDispatch } from "react-redux";
 import { signUpUser } from "@/actions/authActions";
 import { useRouter } from "next/navigation";
+import Button from "../common/Button";
 
-export default function RegisterForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const { isLoading, signingUpUserError } = useSelector((state: any) => state.auth);
+export default function RegisterForm(): JSX.Element {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const { isLoading, signingUpUserError } = useSelector(
+    (state: any) => state.auth
+  );
   const dispatch = useDispatch();
   const router = useRouter();
 
   const handleSignUp = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await dispatch(signUpUser({email, password, confirmPassword}));
-    if(response) {
+    const response = await dispatch(
+      signUpUser({ email, password, confirmPassword })
+    );
+    if (response) {
       router.refresh();
-      router.push('/register/success');
-    } 
+      router.push("/register/success");
+    }
   };
 
-
   return (
-    <div className="flex min-h-screen flex-col justify-center items-center py-12 px-24 md:px-28">
+    <div className="flex min-h-screen flex-col justify-center items-center py-12 px-24 md:px-28 sm:!px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Create an account
@@ -33,10 +37,7 @@ export default function RegisterForm() {
       </div>
 
       <div className="mt-10 w-[450px] sm:mx-auto sm:w-full sm:max-w-sm">
-        <form
-          className="space-y-6"
-          onSubmit={handleSignUp}
-        >
+        <form className="space-y-6" onSubmit={handleSignUp}>
           <div>
             <label
               htmlFor="email"
@@ -79,9 +80,7 @@ export default function RegisterForm() {
                 value={password}
               />
             </div>
-            
           </div>
-
 
           <div>
             <div className="flex items-center justify-between">
@@ -104,9 +103,10 @@ export default function RegisterForm() {
                 value={confirmPassword}
               />
             </div>
-           
           </div>
-          {signingUpUserError && <p className="text-red-800">{signingUpUserError}</p>}
+          {signingUpUserError && (
+            <p className="text-red-800">{signingUpUserError}</p>
+          )}
           <div>
             <Button
               disabled={isLoading}

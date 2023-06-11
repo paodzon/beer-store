@@ -5,24 +5,25 @@ import Link from "next/link";
 import Button from "../common/Button";
 import { useSelector, useDispatch } from "react-redux";
 import { signInUser } from "@/actions/authActions";
-import {useRouter } from 'next/navigation';
-export default function LoginForm() {
+import { useRouter } from "next/navigation";
+export default function LoginForm(): JSX.Element {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state: any) => state.auth);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const router = useRouter();
+
   const handleSignIn = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await dispatch(signInUser({ email, password }));    
-    if(response) {
+    const response = await dispatch(signInUser({ email, password }));
+    if (response) {
       router.refresh();
-      router.push('/');
-    } 
+      router.push("/");
+    }
   };
 
   return (
-    <div className="flex min-h-screen flex-col justify-center items-center py-12 px-24 md:px-28">
+    <div className="flex min-h-screen flex-col justify-center items-center py-12 px-24 md:px-28 sm:!px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Sign in to your account

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Button from "../common/Button";
 import { useRouter } from "next/navigation";
 import { removeProduct, updateQuantity } from "@/actions/cartActions";
+import { toast } from "react-hot-toast";
 
 interface ItemProps {
   id: number;
@@ -14,16 +15,17 @@ interface ItemProps {
   image_url?: string | null;
 }
 
-const ItemCard = (props: ItemProps) => {
+const ItemCard: React.FC<ItemProps> = (props) => {
   const router = useRouter();
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState<boolean>(false);
 
-  const onRemoveItem = async() => {
+  const onRemoveItem = async () => {
+    
     setLoading(true);
     await removeProduct(props.id);
     router.refresh();
     setLoading(false);
-  }
+  };
 
   return (
     <div className="flex justify-between items-center mb-6 rounded-lg bg-white p-6 shadow-md lg:flex-col lg:gap-10 lg:w-[350px]">
@@ -47,23 +49,37 @@ const ItemCard = (props: ItemProps) => {
         <span
           onClick={async () => {
             if (props.quantity === 1) return;
-            await updateQuantity({ id: props.id, quantity: -1 });
+            await toast.promise(
+              updateQuantity({ id: props.id, quantity: -1 }),
+               {
+                 loading: 'Saving...',
+                 success: <b>Quantity updated!</b>,
+                 error: <b>Error! Please try again.</b>,
+               }
+             );
             router.refresh();
           }}
-          className="cursor-pointer rounded-l text-white bg-secondary py-1 px-3.5 duration-100  "
+          className="cursor-pointer rounded-l text-primary border border-secondary py-0.5 px-3 duration-100 hover:bg-primary hover:text-white"
         >
           {" "}
           -{" "}
         </span>
-        <p className="h-8 w-8 border bg-white text-center text-xs outline-none flex justify-center items-center">
+        <p className="h-[30px] w-10 text-primary border border-t-secondary border-b-secondary text-center text-xs outline-none flex justify-center items-center">
           {props.quantity}
         </p>
         <span
           onClick={async () => {
-            await updateQuantity({ id: props.id, quantity: 1 });
+            await toast.promise(
+              updateQuantity({ id: props.id, quantity: 1 }),
+               {
+                 loading: 'Saving...',
+                 success: <b>Quantity updated</b>,
+                 error: <b>Error! Please try again.</b>,
+               }
+             );
             router.refresh();
           }}
-          className="cursor-pointer rounded-r text-white bg-secondary py-1 px-3 duration-100 "
+          className="cursor-pointer rounded-r text-primary border border-secondary py-0.5 px-3 duration-100 hover:bg-primary hover:text-white"
         >
           {" "}
           +{" "}

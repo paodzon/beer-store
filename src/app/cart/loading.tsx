@@ -2,7 +2,7 @@ import { getShoppingCart } from "@/actions/getProducts";
 import CartHeader from "@/components/cart/CartHeader";
 import React from "react";
 
-const LoadingPage = async () => {
+const LoadingPage: React.FC = async () => {
 
   const data: Array<CartItem> | [] | any = await getShoppingCart();
   const cartLength = data
@@ -11,7 +11,7 @@ const LoadingPage = async () => {
 
 
   return (
-    <div className=" bg-gray-100 pt-20">
+    <div className=" bg-gray-100 pt-20 min-h-screen">
       <div className="w-full flex flex-row justify-center">
         <CartHeader length={cartLength}/>
       </div>

@@ -1,14 +1,11 @@
-import React from 'react'
+import React from "react";
+import AuthLayout from "@/components/layout/AuthLayout";
+import RegisterForm from "@/components/auth/RegistrationForm";
 
-import AuthLayout from '@/components/layout/AuthLayout'
-import RegisterForm from '@/components/auth/RegistrationForm'
-
-const Register = () => {
+export default function Register(): JSX.Element {
   return (
     <AuthLayout>
-    <RegisterForm/>
-  </AuthLayout>
-  )
+      <RegisterForm />
+    </AuthLayout>
+  );
 }
-
-export default Register

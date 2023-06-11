@@ -1,48 +1,52 @@
-'use client';
-import { useCallback, useState, useEffect } from 'react'
+"use client";
+import { useCallback, useState, useEffect } from "react";
 import { IconButton, Typography } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { usePersistentScroll } from '@/utils/hooks';
+import { usePersistentScroll } from "@/utils/hooks";
 
-export default function Pagination({itemLength ,page}: {itemLength: number, page:number}) {
-  const [active, setActive] = useState(page);
+export default function Pagination({
+  itemLength,
+  page,
+}: {
+  itemLength: number;
+  page: number;
+}): JSX.Element {
   const router = useRouter();
   const pathName = usePathname();
   const searchParams = useSearchParams();
+  const [active, setActive] = useState<number>(page);
   usePersistentScroll(searchParams);
 
   useEffect(() => {
     setActive(page);
-  },[page])
+  }, [page]);
 
   const setPageParam = useCallback(
     (key: string, value: string) => {
-      const currentParams = searchParams.toString()
-      const params = new URLSearchParams(currentParams)
-      params.set(key, value)
-      if(value === "") params.delete(key);
-      if (currentParams === params.toString()) return
-      localStorage.setItem('persistentScroll', window.scrollY.toString())
-      router.push(`${pathName}?${params.toString()}`)
+      const currentParams = searchParams.toString();
+      const params = new URLSearchParams(currentParams);
+      params.set(key, value);
+      if (value === "") params.delete(key);
+      if (currentParams === params.toString()) return;
+      localStorage.setItem("persistentScroll", window.scrollY.toString());
+      router.push(`${pathName}?${params.toString()}`);
     },
-    [searchParams, pathName, router],
-  )
+    [searchParams, pathName, router]
+  );
 
-
-  const next = async() => {
+  const next = async () => {
     if (itemLength < 24) return;
- 
     setActive(active + 1);
-    await setPageParam('page', `${active + 1}`)
+    await setPageParam("page", `${active + 1}`);
   };
- 
-  const prev = async() => {
+
+  const prev = async () => {
     if (active === 1) return;
     setActive(active - 1);
-    await setPageParam('page', `${active - 1}`)
+    await setPageParam("page", `${active - 1}`);
   };
- 
+
   return (
     <div className="flex items-center gap-8">
       <IconButton

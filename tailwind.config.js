@@ -16,7 +16,7 @@ module.exports = withMT({
 
     screens: {
       sm: {'max': '640px'},
-      md: {'max': "800px"},
+      md: {'max': "900px"},
       lg: {'max': "1200px"},
       xl: {'max': "1450px"},
       "2xl": {'max': "1536px"},

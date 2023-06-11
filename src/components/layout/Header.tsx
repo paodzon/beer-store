@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import Link from "next/link";
 import {
   Navbar,
@@ -15,13 +14,15 @@ import {
 import Button from "../common/Button";
 import { useDispatch } from "react-redux";
 import { signOutUser } from "@/actions/authActions";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import { protectedRoutes } from '@/utils/constants';
+import { toast } from "react-hot-toast";
 
 const Header: React.FC = () => {
   const [openNav, setOpenNav] = useState<boolean>(false);
-  const user:CurrentUser| any= useSelector<any>((state) => state.auth.user);
   const dispatch = useDispatch();
   const router = useRouter();
+  const pathName = usePathname();
 
 
   useEffect(() => {
@@ -32,7 +33,7 @@ const Header: React.FC = () => {
   }, []);
 
   const navList: React.ReactNode = (
-    <ul className="mb-4 mt-5 flex flex-row items-center gap-6 lg:mb-0 lg:mt-0 lg:items-center lg:gap-5 md:flex-col">
+    <ul className="mb-4 mt-5 flex flex-row items-center gap-6 lg:mb-0 lg:mt-0 lg:items-center lg:gap-5 md:flex-col sm:!mt-10">
       <Typography
         as="li"
         variant="small"
@@ -60,11 +61,18 @@ const Header: React.FC = () => {
         </Link>
       </Typography>
 
-      <div className="hidden lg:block">
+      <div className="hidden lg:block w-full">
         <Button
-        
+
           onClick={async () => {
-            await dispatch(signOutUser());
+            await toast.promise(
+              dispatch(signOutUser()),
+               {
+                 loading: 'Logging out...',
+                 success: <b>Logout Success!</b>,
+                 error: <b>Error! Please try again.</b>,
+               }
+             );
             router.refresh();
           }}
         >
@@ -82,7 +90,14 @@ const Header: React.FC = () => {
             <MenuItem
               className="flex items-center gap-2 "
               onClick={async () => {
-                await dispatch(signOutUser());
+                await toast.promise(
+                  dispatch(signOutUser()),
+                   {
+                     loading: 'Logging out...',
+                     success: <b>Logout Success!</b>,
+                     error: <b>Error! Please try again.</b>,
+                   }
+                 );
                 router.refresh();
               }}
             >
@@ -95,6 +110,8 @@ const Header: React.FC = () => {
       </div>
     </ul>
   );
+
+  if(!protectedRoutes.includes(pathName)) return;
 
   return (
     <Navbar className="sticky inset-0 z-10 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4">
