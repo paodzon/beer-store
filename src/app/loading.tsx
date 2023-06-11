@@ -22,7 +22,7 @@ const Loading = () => {
         </div>
 
         <div className="grid 3xl:grid-cols-4 2xl:!grid-cols-3 lg:flex lg:flex-row lg: flex-wrap md:flex md:flex-col justify-center gap-10 pt-14 ">
-          {Array.from({ length: 10 }, (_, idx) => {
+          {Array.from({ length: 25 }, (_, idx) => {
             return <LoadingCard key={idx} />;
           })}
         </div>

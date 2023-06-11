@@ -1,35 +1,15 @@
 "use client";
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Input, Button} from "@material-tailwind/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-
-export const createQueryString = ({
-  name,
-  value,
-  searchParams,
-}: {
-  name: string;
-  value: string;
-  searchParams: string;
-}) => {
-  const params = new URLSearchParams(searchParams.toString());
-  params.set(name, value);
-  return params.toString();
-};
+import { usePersistentScroll } from '@/utils/hooks';
 
 const Search = () => {
   const router = useRouter();
   const pathName = usePathname();
   const searchParams = useSearchParams();
   const [search, setSearch] = useState("");
-  
-  useEffect(() => {
-    const persistentScroll = localStorage.getItem('persistentScroll')
-    if (persistentScroll === null) return
-    window.scrollTo({ top: Number(persistentScroll) })
-    if (Number(persistentScroll) === window.scrollY)
-      localStorage.removeItem('persistentScroll')
-  }, [searchParams]);
+  usePersistentScroll(searchParams);
 
   const setSearchParam = useCallback(
     (key: string, value: string) => {
@@ -37,7 +17,8 @@ const Search = () => {
       const params = new URLSearchParams(currentParams)
 
       params.set(key, value)
-      if(value === "") params.delete("beer_name");
+      params.set('page', '1');
+      if(value === "") params.delete(key);
       if (currentParams === params.toString()) return
       localStorage.setItem('persistentScroll', window.scrollY.toString())
       router.push(`${pathName}?${params.toString()}`)
@@ -51,7 +32,7 @@ const Search = () => {
   };
 
   return (
-    <form className="w-full max-w-[24rem]" onSubmit={onChange}>
+    <form className="w-full max-w-[20rem]" onSubmit={onChange}>
       <div className="relative flex w-full max-w-[24rem]">
         <Input
           type="text"

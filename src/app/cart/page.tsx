@@ -23,7 +23,7 @@ const Cart = async () => {
 
 
   return (
-    <div className=" bg-gray-100 pt-20 h-screen">
+    <div className=" bg-gray-100 pt-20 min-h-screen">
       <div className="w-full flex flex-row justify-center">
         <CartHeader length={cartLength} />
       </div>

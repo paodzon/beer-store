@@ -39,7 +39,7 @@ const ItemCard = (props: ItemProps) => {
           className="w-[150px] h-[200px] object-contain rounded-lg"
         />
         <div className="mt-5 sm:mt-0">
-          <h2 className="text-xl font-bold text-gray-900">{props.name}</h2>
+          <h2 className="text-lg font-bold text-gray-900">{props.name}</h2>
         </div>
       </div>
 

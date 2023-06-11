@@ -1,7 +1,8 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePersistentScroll } from '@/utils/hooks';
 
 
 const SelectYear = () => {
@@ -10,20 +11,13 @@ const SelectYear = () => {
   const router = useRouter();
   const pathName = usePathname();
   const searchParams = useSearchParams();
-
-  useEffect(() => {
-    const persistentScroll = localStorage.getItem('persistentScroll')
-    if (persistentScroll === null) return
-    window.scrollTo({ top: Number(persistentScroll) })
-    if (Number(persistentScroll) === window.scrollY)
-      localStorage.removeItem('persistentScroll')
-  }, [searchParams]);
+  usePersistentScroll(searchParams);
 
   const setSelectedParam = useCallback(
     (value: string) => {
       const currentParams = searchParams.toString()
       const params = new URLSearchParams(currentParams)
-
+      params.set('page', '1');
       params.set('brewed_before', `12-${value}`);
       params.set('brewed_after', `01-${value}`);
       if(value === "") {
@@ -47,20 +41,24 @@ const SelectYear = () => {
   }
 
   return (
-    <div className="w-full max-w-[24rem]">
+    <div className="w-full max-w-[20rem]">
       <select
+      placeholder='Select year brewed'
         value={selected}
         onChange={handleChange}
         className="w-full cursor-default rounded-md bg-white py-1.5 pl-3 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
       >
-        <option value=''>Select All</option>
-        <option value="2020">2020</option>
-        <option value="2019">2019</option>
-        <option value="2018">2018</option>
-        <option value="2017">2017</option>
+        <option value=''>Select Year</option>
         <option value="2016">2016</option>
         <option value="2015">2015</option>
         <option value="2014">2014</option>
+        <option value="2013">2013</option>
+        <option value="2012">2012</option>
+        <option value="2011">2011</option>
+        <option value="2010">2010</option>
+        <option value="2009">2009</option>
+        <option value="2008">2008</option>
+        <option value="2007">2007</option>
       </select>
     </div>
   );
