@@ -9,6 +9,9 @@ export const getProducts = async (query:string) => {
 }
 
 export const getShoppingCart = async () => {
-  const response = await supabase.from("cart").select().order('id', {ascending:true});
-  return response.data;
+  const { data } = await supabase
+    .from("cart")
+    .select()
+    .order("id", { ascending: true });
+  return data;
 };

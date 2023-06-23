@@ -5,13 +5,17 @@ import * as actionTypes from "@/store/actionTypes";
 const supabase = createClientComponentClient();
 
 export const getShoppingCart: CallableFunction =
-  (products: Array<CartItem>) => async (dispatch: Dispatch) => {
+  () => async (dispatch: Dispatch) => {
     try {
-      const cartLength = products
+      const { data } = await supabase
+      .from("cart")
+      .select()
+      .order("id", { ascending: true });
+      const cartLength = data!
         .map((item: Array<CartItem> | any) => item.quantity)
         .reduce((acc: number, curr: number) => acc + curr, 0);
       dispatch({ type: actionTypes.GET_CART_LENGTH, payload: cartLength });
-      dispatch({ type: actionTypes.GET_PRODUCTS, payload: products });
+      dispatch({ type: actionTypes.GET_PRODUCTS, payload: data });
     } catch (err: any) {
       dispatch({ type: actionTypes.GET_PRODUCTS_ERROR, payload: err.message });
     }

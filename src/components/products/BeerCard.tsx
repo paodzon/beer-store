@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Button from "@/components/common/Button";
-import { useRouter } from "next/navigation";
 import { addProduct } from "@/actions/cartActions";
 import { toast } from "react-hot-toast";
 import { Chip } from "@material-tailwind/react";
@@ -18,7 +17,6 @@ interface BeerCardProps {
 }
 
 const BeerCard: React.FC<BeerCardProps> = (props) => {
-  const router = useRouter();
   const [isLoading, setLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
   const addHandler = async () => {

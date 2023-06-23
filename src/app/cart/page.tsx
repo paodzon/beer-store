@@ -23,7 +23,7 @@ const Cart: React.FC = async () => {
         <CartHeader />
       </div>
       <div className="flex flex-row w-full justify-center gap-20 lg:flex-col">
-        <ItemList products={data}/>
+        <ItemList/>
       </div>
     </div>
   );

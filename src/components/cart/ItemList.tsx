@@ -4,17 +4,13 @@ import ItemCard from "./ItemCard";
 import { useDispatch, useSelector } from "react-redux";
 import { getShoppingCart } from "@/actions/cartActions";
 
-interface ItemListProps {
-  products: Array<CartItem>;
-}
 
-const ItemList: React.FC<ItemListProps> = (props) => {
+const ItemList: React.FC = () => {
   const dispatch = useDispatch();
   const products = useSelector((state: any) => state.cart.products);
-
   useEffect(() => {
-    dispatch(getShoppingCart(props.products));
-  }, [dispatch, props.products]);
+    dispatch(getShoppingCart());
+  }, [dispatch]);
 
   return (
     <div className="rounded-lg w-[60%] lg:w-full lg:px-20 lg:flex lg:flex-row lg:flex-wrap lg:gap-10 lg:justify-center sm:!px-10">
