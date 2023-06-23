@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { addProduct } from "@/actions/cartActions";
 import { toast } from "react-hot-toast";
 import { Chip } from "@material-tailwind/react";
+import { useDispatch } from "react-redux";
 
 interface BeerCardProps {
   id: number;
@@ -19,16 +20,15 @@ interface BeerCardProps {
 const BeerCard: React.FC<BeerCardProps> = (props) => {
   const router = useRouter();
   const [isLoading, setLoading] = useState<boolean>(false);
-
+  const dispatch = useDispatch();
   const addHandler = async () => {
     setLoading(true);
-    await addProduct({
+    await dispatch(addProduct({
       id: props.id,
       name: props.name ?? "",
       image: props.image ?? "",
-    });
+    }));
     setLoading(false);
-    router.refresh();
     toast.success("Item added to cart!", { className: "font-bold" });
   };
 

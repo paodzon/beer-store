@@ -13,7 +13,7 @@ const LoadingPage: React.FC = async () => {
   return (
     <div className=" bg-gray-100 pt-20 min-h-screen">
       <div className="w-full flex flex-row justify-center">
-        <CartHeader length={cartLength}/>
+        <CartHeader/>
       </div>
       <div className="flex flex-row w-full justify-center gap-20 lg:flex-col">
         <div className="flex flex-col rounded-lg gap-10 w-[60%] lg:w-full lg:px-20 lg:flex lg:flex-row lg:flex-wrap lg:gap-10 lg:justify-center">

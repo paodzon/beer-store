@@ -1,12 +1,13 @@
 "use client";
 import React from "react";
 import { Chip } from "@material-tailwind/react";
+import { useSelector } from "react-redux";
 
-interface CardHeaderProps {
-  length?: number;
-}
+const CartHeader: React.FC = () => {
 
-const CartHeader: React.FC<CardHeaderProps> = ({ length }) => {
+  const cartLength = useSelector((state:any) => state.cart.cartLength);
+
+
   return (
     <div className="flex flex-row w-[60%] gap-20 mb-5 md:justify-center">
       <div className="flex">
@@ -15,7 +16,7 @@ const CartHeader: React.FC<CardHeaderProps> = ({ length }) => {
         </h1>
         <Chip
           variant="outlined"
-          value={`${length ?? 0} items`}
+          value={`${cartLength ?? 0} items`}
           className="text-primary border-primary"
         />
       </div>

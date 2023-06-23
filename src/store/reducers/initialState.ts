@@ -4,6 +4,11 @@ const INITIAL_STATE = {
     isLoading: false,
     loggingInUserError: '',
     signingUpUserError: '',
+  },
+  cart: {
+    products: [],
+    productsError: '',
+    cartLength: 0,
   }
 };
 

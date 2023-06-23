@@ -2,28 +2,28 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import Button from "../common/Button";
-import { useRouter } from "next/navigation";
 import { removeProduct, updateQuantity } from "@/actions/cartActions";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 
 interface ItemProps {
   id: number;
   name?: string;
-  quantity?: number;
+  quantity: number;
   product_id: number;
   user_id: string;
   image_url?: string | null;
 }
 
 const ItemCard: React.FC<ItemProps> = (props) => {
-  const router = useRouter();
-  const [isLoading, setLoading] = useState<boolean>(false);
 
-  const onRemoveItem = async () => {
-    
+  const [isLoading, setLoading] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  const isRemovingProduct = useSelector((state:any) => state.cart.isRemovingProduct);
+
+  const onRemoveItem = async () => {  
     setLoading(true);
-    await removeProduct(props.id);
-    router.refresh();
+    await dispatch(removeProduct({id: props.id, quantity: props.quantity}));
     setLoading(false);
   };
 
@@ -48,16 +48,15 @@ const ItemCard: React.FC<ItemProps> = (props) => {
       <div className="flex items-center border-gray-100">
         <span
           onClick={async () => {
-            if (props.quantity === 1) return;
+            if (props.quantity <= 1) return;
             await toast.promise(
-              updateQuantity({ id: props.id, quantity: -1 }),
+              dispatch(updateQuantity({ id: props.id, quantity: -1 })),
                {
                  loading: 'Saving...',
                  success: <b>Quantity updated!</b>,
                  error: <b>Error! Please try again.</b>,
                }
              );
-            router.refresh();
           }}
           className="cursor-pointer rounded-l text-primary border border-secondary py-0.5 px-3 duration-100 hover:bg-primary hover:text-white"
         >
@@ -68,16 +67,15 @@ const ItemCard: React.FC<ItemProps> = (props) => {
           {props.quantity}
         </p>
         <span
-          onClick={async () => {
+          onClick={async() => {
             await toast.promise(
-              updateQuantity({ id: props.id, quantity: 1 }),
+              dispatch(updateQuantity({ id: props.id, quantity: 1 })),
                {
                  loading: 'Saving...',
-                 success: <b>Quantity updated</b>,
+                 success: <b>Quantity updated!</b>,
                  error: <b>Error! Please try again.</b>,
                }
              );
-            router.refresh();
           }}
           className="cursor-pointer rounded-r text-primary border border-secondary py-0.5 px-3 duration-100 hover:bg-primary hover:text-white"
         >

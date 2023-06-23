@@ -38,7 +38,6 @@ export const signUpUser: CallableFunction =
   ({ email, password, confirmPassword }: SignUp) =>
   async (dispatch: Dispatch) => {
     dispatch({ type: actionTypes.IS_LOADING, payload: true });
-    console.log(email, password, confirmPassword);
     try {
       if (password !== confirmPassword)
         throw new Error("Passwords does not match");
