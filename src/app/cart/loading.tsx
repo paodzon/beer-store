@@ -1,15 +1,7 @@
-import { getShoppingCart } from "@/actions/getProducts";
 import CartHeader from "@/components/cart/CartHeader";
 import React from "react";
 
 const LoadingPage: React.FC = async () => {
-
-  const data: Array<CartItem> | [] | any = await getShoppingCart();
-  const cartLength = data
-  .map((item: CartItem) => item.quantity)
-  .reduce((acc: number, curr: number) => acc + curr,0);
-
-
   return (
     <div className=" bg-gray-100 pt-20 min-h-screen">
       <div className="w-full flex flex-row justify-center">
@@ -17,7 +9,7 @@ const LoadingPage: React.FC = async () => {
       </div>
       <div className="flex flex-row w-full justify-center gap-20 lg:flex-col">
         <div className="flex flex-col rounded-lg gap-10 w-[60%] lg:w-full lg:px-20 lg:flex lg:flex-row lg:flex-wrap lg:gap-10 lg:justify-center">
-          {Array.from({ length: cartLength }, (_, idx) => {
+          {Array.from({ length: 3 }, (_, idx) => {
             return (
               <div
                 key={idx}
